@@ -1,0 +1,613 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Anglican Church of the Pentecost</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    :root {
+      --primary-color: #1a4d2e;
+      --secondary-color: #c19a5b;
+      --accent-color: #8b4513;
+      --light-bg: #f8f6f3;
+      --dark-text: #2c3e50;
+      --white: #ffffff;
+      --shadow: 0 8px 30px rgba(0,0,0,0.12);
+      --shadow-hover: 0 15px 50px rgba(0,0,0,0.2);
+    }
+    body {
+      font-family: 'Poppins', sans-serif;
+      line-height: 1.7;
+      color: var(--dark-text);
+      background-color: var(--light-bg);
+      overflow-x: hidden;
+    }
+    h1, h2, h3 {
+      font-family: 'Playfair Display', serif;
+      font-weight: 700;
+      line-height: 1.3;
+    }
+    .navbar {
+      background: linear-gradient(135deg, var(--primary-color) 0%, #2d6a4f 100%);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+    }
+    .nav-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 2rem;
+    }
+    .logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.5rem;
+      color: var(--white);
+      font-weight: 700;
+      text-decoration: none;
+      letter-spacing: 1px;
+    }
+    .nav-links {
+      display: flex;
+      gap: 2.5rem;
+      list-style: none;
+    }
+    .nav-links a {
+      color: var(--white);
+      text-decoration: none;
+      font-weight: 500;
+      font-size: 0.95rem;
+      transition: all 0.3s ease;
+      position: relative;
+      padding: 0.5rem 0;
+    }
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      width: 0;
+      height: 2px;
+      bottom: 0;
+      left: 0;
+      background-color: var(--secondary-color);
+      transition: width 0.3s ease;
+    }
+    .nav-links a:hover::after { width: 100%; }
+    .mobile-menu-btn {
+      display: none;
+      background: none;
+      border: none;
+      color: var(--white);
+      font-size: 1.5rem;
+      cursor: pointer;
+      z-index: 1001;
+    }
+    .nav-links.mobile-active {
+      display: flex;
+      flex-direction: column;
+      position: fixed;
+      top: 0;
+      right: 0;
+      width: 70%;
+      height: 100vh;
+      background: linear-gradient(135deg, var(--primary-color) 0%, #2d6a4f 100%);
+      padding: 80px 30px 30px;
+      gap: 2rem;
+      box-shadow: -5px 0 20px rgba(0,0,0,0.3);
+      animation: slideIn 0.3s ease;
+    }
+    @keyframes slideIn {
+      from { transform: translateX(100%); }
+      to { transform: translateX(0); }
+    }
+    .mobile-overlay {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.5);
+      z-index: 999;
+    }
+    .mobile-overlay.active { display: block; }
+    .hero {
+      background: linear-gradient(135deg, rgba(26, 77, 46, 0.85) 0%, rgba(45, 106, 79, 0.85) 100%),
+                  url('https://images.unsplash.com/photo-1438032005730-c779502df39b?auto=format&fit=crop&w=1600&q=80') no-repeat center center/cover;
+      color: var(--white);
+      padding: 120px 20px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: radial-gradient(circle at 30% 50%, rgba(193, 154, 91, 0.2) 0%, transparent 70%);
+      animation: pulse 8s ease-in-out infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 0.5; }
+      50% { opacity: 1; }
+    }
+    .hero-content {
+      max-width: 800px;
+      margin: 0 auto;
+      position: relative;
+      z-index: 1;
+      animation: fadeInUp 1s ease-out;
+    }
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .hero h1 {
+      font-size: 3.5rem;
+      margin-bottom: 1rem;
+      text-shadow: 2px 4px 8px rgba(0,0,0,0.3);
+      letter-spacing: 2px;
+    }
+    .hero-subtitle {
+      font-size: 1.3rem;
+      margin-bottom: 2rem;
+      font-weight: 300;
+      letter-spacing: 1px;
+    }
+    .cta-button {
+      display: inline-block;
+      background-color: var(--secondary-color);
+      color: var(--white);
+      padding: 15px 40px;
+      border-radius: 50px;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 1.1rem;
+      transition: all 0.4s ease;
+      box-shadow: 0 8px 20px rgba(193, 154, 91, 0.3);
+      margin-top: 1rem;
+    }
+    .cta-button:hover {
+      background-color: #a67c3f;
+      transform: translateY(-3px);
+      box-shadow: 0 12px 30px rgba(193, 154, 91, 0.4);
+    }
+    .verse-section {
+      background: linear-gradient(135deg, var(--white) 0%, #fdfbf8 100%);
+      padding: 80px 20px;
+      text-align: center;
+    }
+    .verse-container {
+      max-width: 900px;
+      margin: 0 auto;
+      background: var(--white);
+      padding: 50px 40px;
+      border-radius: 20px;
+      box-shadow: var(--shadow);
+      border-left: 6px solid var(--secondary-color);
+      position: relative;
+      transition: transform 0.3s ease;
+    }
+    .verse-container:hover {
+      transform: translateY(-5px);
+      box-shadow: var(--shadow-hover);
+    }
+    .verse-container::before {
+      content: '"';
+      position: absolute;
+      top: -20px;
+      left: 30px;
+      font-size: 120px;
+      color: var(--secondary-color);
+      opacity: 0.2;
+      font-family: Georgia, serif;
+    }
+    .verse-text {
+      font-size: 1.5rem;
+      font-style: italic;
+      color: var(--dark-text);
+      margin-bottom: 1.5rem;
+      line-height: 1.8;
+    }
+    .verse-reference {
+      font-size: 1.1rem;
+      color: var(--accent-color);
+      font-weight: 600;
+      letter-spacing: 1px;
+    }
+    .services-section {
+      padding: 80px 20px;
+      background: var(--light-bg);
+    }
+    .section-title {
+      text-align: center;
+      font-size: 2.5rem;
+      color: var(--primary-color);
+      margin-bottom: 1rem;
+    }
+    .section-subtitle {
+      text-align: center;
+      font-size: 1.1rem;
+      color: #666;
+      margin-bottom: 3rem;
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 30px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .service-card {
+      background: var(--white);
+      padding: 40px 30px;
+      border-radius: 15px;
+      text-align: center;
+      box-shadow: var(--shadow);
+      transition: all 0.4s ease;
+      border-top: 4px solid var(--secondary-color);
+      position: relative;
+      overflow: hidden;
+    }
+    .service-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(193, 154, 91, 0.1), transparent);
+      transition: left 0.5s ease;
+    }
+    .service-card:hover::before { left: 100%; }
+    .service-card:hover {
+      transform: translateY(-10px);
+      box-shadow: var(--shadow-hover);
+      border-top-color: var(--primary-color);
+    }
+    .service-icon {
+      width: 70px;
+      height: 70px;
+      background: linear-gradient(135deg, var(--primary-color) 0%, #2d6a4f 100%);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 1.5rem;
+      font-size: 2rem;
+      color: var(--white);
+      box-shadow: 0 8px 20px rgba(26, 77, 46, 0.3);
+    }
+    .service-card h3 {
+      font-size: 1.5rem;
+      color: var(--primary-color);
+      margin-bottom: 0.8rem;
+    }
+    .service-time {
+      font-size: 1.1rem;
+      color: var(--accent-color);
+      font-weight: 600;
+      margin-bottom: 1rem;
+      line-height: 1.6;
+    }
+    .service-description {
+      color: #666;
+      font-size: 0.95rem;
+      line-height: 1.6;
+    }
+    .welcome-section {
+      padding: 80px 20px;
+      background: linear-gradient(135deg, var(--primary-color) 0%, #2d6a4f 100%);
+      color: var(--white);
+    }
+    .welcome-container {
+      max-width: 1000px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 50px;
+      align-items: center;
+    }
+    .welcome-text h2 {
+      font-size: 2.5rem;
+      margin-bottom: 1.5rem;
+    }
+    .welcome-text p {
+      font-size: 1.1rem;
+      line-height: 1.8;
+      margin-bottom: 1.5rem;
+      opacity: 0.95;
+    }
+    .welcome-image {
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+    }
+    .welcome-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.5s ease;
+    }
+    .welcome-image:hover img { transform: scale(1.05); }
+    .bible-section {
+      padding: 80px 20px;
+      background: var(--white);
+    }
+    .bible-container {
+      max-width: 900px;
+      margin: 0 auto;
+      text-align: center;
+    }
+    .bible-button {
+      padding: 15px 40px;
+      font-size: 1.1rem;
+      background: linear-gradient(135deg, var(--primary-color) 0%, #2d6a4f 100%);
+      color: var(--white);
+      border: none;
+      border-radius: 50px;
+      cursor: pointer;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      box-shadow: 0 8px 20px rgba(26, 77, 46, 0.3);
+      margin-top: 1rem;
+    }
+    .bible-button:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 12px 30px rgba(26, 77, 46, 0.4);
+    }
+    .bible-iframe-container {
+      margin-top: 30px;
+      border-radius: 15px;
+      overflow: hidden;
+      box-shadow: var(--shadow);
+    }
+    .bible-iframe-container iframe {
+      width: 100%;
+      height: 600px;
+      border: none;
+    }
+    footer {
+      background: linear-gradient(135deg, #1a1a1a 0%, #2c2c2c 100%);
+      color: var(--white);
+      padding: 50px 20px 30px;
+    }
+    .footer-content {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 40px;
+      margin-bottom: 30px;
+    }
+    .footer-section h3 {
+      font-size: 1.3rem;
+      margin-bottom: 1.5rem;
+      color: var(--secondary-color);
+    }
+    .footer-section p,
+    .footer-section a {
+      color: rgba(255,255,255,0.8);
+      text-decoration: none;
+      line-height: 2;
+      display: block;
+      transition: color 0.3s ease;
+    }
+    .footer-section a:hover {
+      color: var(--secondary-color);
+      padding-left: 5px;
+    }
+    .social-links {
+      display: flex;
+      gap: 15px;
+      margin-top: 1rem;
+    }
+    .social-links a {
+      width: 40px;
+      height: 40px;
+      background: rgba(255,255,255,0.1);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.3s ease;
+    }
+    .social-links a:hover {
+      background: var(--secondary-color);
+      transform: translateY(-3px);
+    }
+    .footer-bottom {
+      text-align: center;
+      padding-top: 30px;
+      border-top: 1px solid rgba(255,255,255,0.1);
+      color: rgba(255,255,255,0.6);
+      font-size: 0.9rem;
+    }
+    @media (max-width: 968px) {
+      .nav-links { display: none; }
+      .mobile-menu-btn { display: block; }
+      .hero h1 { font-size: 2.5rem; }
+      .welcome-container { grid-template-columns: 1fr; }
+      .section-title { font-size: 2rem; }
+    }
+    @media (max-width: 600px) {
+      .hero h1 { font-size: 2rem; }
+      .hero-subtitle { font-size: 1rem; }
+      .verse-text { font-size: 1.2rem; }
+      .services-grid { grid-template-columns: 1fr; }
+      .footer-content { grid-template-columns: 1fr; gap: 30px; }
+    }
+    .fade-in {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+    .fade-in.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  </style>
+</head>
+<body>
+  <nav class="navbar">
+    <div class="nav-container">
+      <a href="index.html" class="logo">ACP</a>
+      <ul class="nav-links" id="navLinks">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="services.html">Services</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+      <button class="mobile-menu-btn" id="mobileMenuBtn">☰</button>
+    </div>
+  </nav>
+  <div class="mobile-overlay" id="mobileOverlay"></div>
+  <section class="hero">
+    <div class="hero-content">
+      <h1>Anglican Church of the Pentecost</h1>
+      <p class="hero-subtitle">My Year of Glorious Expansion</p>
+      <a href="#services" class="cta-button">Join Us This Sunday</a>
+    </div>
+  </section>
+  <section class="verse-section">
+    <div class="verse-container fade-in">
+      <p class="verse-text">For you will spread out to the right and to the left; your descendants will dispossess nations and settle in their desolate cities.</p>
+      <p class="verse-reference">— Isaiah 54:3 (NKJV)</p>
+    </div>
+  </section>
+  <section class="services-section" id="services">
+    <h2 class="section-title fade-in">Our Service Times</h2>
+    <p class="section-subtitle fade-in">Join us as we gather to worship and grow together in faith</p>
+    <div class="services-grid">
+      <div class="service-card fade-in">
+        <div class="service-icon">🕊️</div>
+        <h3>Sunday Service</h3>
+        <p class="service-time">9:00 AM</p>
+        <p class="service-description">Weekly worship service with inspiring messages, praise, and communion with fellow believers.</p>
+      </div>
+      <div class="service-card fade-in">
+        <div class="service-icon">📖</div>
+        <h3>Evening Mass</h3>
+        <p class="service-time">Wednesday • 6:00 PM<br>(Holy Communion)</p>
+        <p class="service-description">Join us for evening worship with Holy Communion and spiritual fellowship.</p>
+      </div>
+      <div class="service-card fade-in">
+        <div class="service-icon">👩‍👧‍👦</div>
+        <h3>Christian Mothers Meeting</h3>
+        <p class="service-time">Saturday • 9:00 AM</p>
+        <p class="service-description">A gathering of mothers for prayer, fellowship, and mutual support in raising godly families.</p>
+      </div>
+      <div class="service-card fade-in">
+        <div class="service-icon">🎵</div>
+        <h3>Choir Practice</h3>
+        <p class="service-time">Saturday • 6:00 PM</p>
+        <p class="service-description">Join our choir and lift your voice in praise. All are welcome, no experience needed.</p>
+      </div>
+    </div>
+  </section>
+  <section class="welcome-section">
+    <div class="welcome-container">
+      <div class="welcome-text fade-in">
+        <h2>Welcome Home</h2>
+        <p>At the Anglican Church of the Pentecost, we believe that everyone has a place in God's family. Whether you're a longtime believer or exploring faith for the first time, we're here to walk alongside you.</p>
+        <p>Our community is built on love, acceptance, and the transformative power of the Gospel. We invite you to experience authentic worship, meaningful fellowship, and opportunities to serve and grow.</p>
+        <a href="about.html" class="cta-button">Learn More About Us</a>
+      </div>
+      <div class="welcome-image fade-in">
+        <img src="https://images.unsplash.com/photo-1507692049790-de58290a4334?auto=format&fit=crop&w=800&q=80" alt="Church community">
+      </div>
+    </div>
+  </section>
+  <section class="bible-section">
+    <div class="bible-container">
+      <h2 class="section-title fade-in">Read the Word</h2>
+      <p class="section-subtitle fade-in">Access the Holy Bible anytime, anywhere</p>
+      <button class="bible-button" onclick="toggleBible()">Open Bible (NKJV)</button>
+      <div id="bible-iframe" class="bible-iframe-container" style="display:none;">
+        <iframe src="https://www.biblegateway.com/passage/?search=Isaiah+54&version=NKJV" allowfullscreen></iframe>
+      </div>
+    </div>
+  </section>
+  <footer>
+    <div class="footer-content">
+      <div class="footer-section">
+        <h3>Anglican Church of the Pentecost</h3>
+        <p>A community of believers dedicated to spreading God's love and truth.</p>
+        <div class="social-links">
+          <a href="#" title="Facebook">f</a>
+          <a href="#" title="Twitter">𝕏</a>
+          <a href="#" title="Instagram">📷</a>
+          <a href="#" title="YouTube">▶</a>
+        </div>
+      </div>
+      <div class="footer-section">
+        <h3>Quick Links</h3>
+        <a href="index.html">Home</a>
+        <a href="about.html">About Us</a>
+        <a href="services.html">Services</a>
+        <a href="contact.html">Contact</a>
+      </div>
+      <div class="footer-section">
+        <h3>Service Times</h3>
+        <p>Sunday Worship: 9:00 AM</p>
+        <p>Wednesday Evening Mass: 6:00 PM</p>
+        <p>Saturday Mothers Meeting: 9:00 AM</p>
+        <p>Saturday Choir: 6:00 PM</p>
+      </div>
+      <div class="footer-section">
+        <h3>Contact Us</h3>
+        <p>📧 info@acpchurch.org</p>
+        <p>📞 +1 (555) 123-4567</p>
+        <p>📍 123 Faith Avenue</p>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2026 Anglican Church of the Pentecost. All rights reserved.</p>
+    </div>
+  </footer>
+  <script>
+    var mobileMenuBtn=document.getElementById('mobileMenuBtn');
+    var navLinks=document.getElementById('navLinks');
+    var mobileOverlay=document.getElementById('mobileOverlay');
+    function toggleMobileMenu(){
+      navLinks.classList.toggle('mobile-active');
+      mobileOverlay.classList.toggle('active');
+      mobileMenuBtn.innerHTML=navLinks.classList.contains('mobile-active')?'✕':'☰';
+    }
+    mobileMenuBtn.addEventListener('click',toggleMobileMenu);
+    mobileOverlay.addEventListener('click',toggleMobileMenu);
+    document.querySelectorAll('.nav-links a').forEach(function(link){
+      link.addEventListener('click',function(){
+        if(navLinks.classList.contains('mobile-active')){toggleMobileMenu();}
+      });
+    });
+    function toggleBible(){
+      var iframe=document.getElementById('bible-iframe');
+      iframe.style.display=iframe.style.display==='none'?'block':'none';
+    }
+    var observer=new IntersectionObserver(function(entries){
+      entries.forEach(function(entry){
+        if(entry.isIntersecting){entry.target.classList.add('visible');}
+      });
+    },{threshold:0.1,rootMargin:'0px 0px -50px 0px'});
+    document.querySelectorAll('.fade-in').forEach(function(el){observer.observe(el);});
+    document.querySelectorAll('a[href^="#"]').forEach(function(anchor){
+      anchor.addEventListener('click',function(e){
+        e.preventDefault();
+        var target=document.querySelector(this.getAttribute('href'));
+        if(target){target.scrollIntoView({behavior:'smooth',block:'start'});}
+      });
+    });
+  </script>
+</body>
+</html>
