@@ -1,0 +1,704 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Anglican Church of the Pentecost</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Georgia, serif;
+            line-height: 1.6;
+            color: #333;
+            background: #fff;
+        }
+
+        nav {
+            background: #2c5f2d;
+            padding: 1rem 5%;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .logo {
+            color: white;
+            font-size: 1.5rem;
+            font-weight: bold;
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: #ffd700;
+        }
+
+        .menu-toggle {
+            display: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+            background: none;
+            border: none;
+        }
+
+        /* FIXED MOBILE MENU */
+        .nav-links.active {
+            display: flex !important;
+            flex-direction: column;
+            position: absolute;
+            top: 60px;
+            left: 0;
+            right: 0;
+            background: #2c5f2d;
+            padding: 1rem;
+            gap: 0;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+
+        .diocese-info {
+            background: #f8f9fa;
+            padding: 2rem 5%;
+            text-align: center;
+            border-bottom: 3px solid #2c5f2d;
+        }
+
+        .diocese-info h3 {
+            color: #2c5f2d;
+            margin-bottom: 0.5rem;
+            font-size: 1.3rem;
+        }
+
+        .diocese-info p {
+            color: #666;
+            margin: 0.3rem 0;
+        }
+
+        .hero {
+            background: linear-gradient(rgba(44, 95, 45, 0.8), rgba(44, 95, 45, 0.8)),
+                        url('https://images.unsplash.com/photo-1438032005730-c779502df39b?auto=format&fit=crop&w=1200&q=80');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            text-align: center;
+            padding: 6rem 5% 4rem;
+        }
+
+        .hero h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            margin-bottom: 2rem;
+        }
+
+        .btn {
+            display: inline-block;
+            background: #ffd700;
+            color: #2c5f2d;
+            padding: 1rem 2rem;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+            transition: transform 0.3s;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+            font-family: Georgia, serif;
+        }
+
+        .btn:hover {
+            transform: scale(1.05);
+        }
+
+        .theme-section {
+            padding: 3rem 5%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .diocesan-theme {
+            background: linear-gradient(135deg, #2c5f2d 0%, #1e4620 100%);
+            color: white;
+            padding: 3rem;
+            text-align: center;
+            border-radius: 10px;
+            margin-bottom: 2rem;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .diocesan-theme h2 {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+            text-transform: uppercase;
+        }
+
+        .diocesan-theme .verse {
+            font-style: italic;
+            font-size: 1.1rem;
+            color: #ffd700;
+        }
+
+        .parish-theme {
+            background: linear-gradient(135deg, #ffd700 0%, #ffed4e 100%);
+            color: #2c5f2d;
+            padding: 2rem;
+            text-align: center;
+            border-radius: 10px;
+            margin-bottom: 2rem;
+        }
+
+        .parish-theme h3 {
+            font-size: 1.5rem;
+        }
+
+        .monthly-theme {
+            background: #fff;
+            border: 3px solid #2c5f2d;
+            padding: 2rem;
+            text-align: center;
+            border-radius: 10px;
+            margin-bottom: 2rem;
+        }
+
+        .monthly-theme h3 {
+            color: #2c5f2d;
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .monthly-theme .scripture {
+            color: #666;
+            font-style: italic;
+        }
+
+        .worship-guidelines {
+            background: #f8f9fa;
+            padding: 2rem;
+            border-radius: 10px;
+            margin-bottom: 2rem;
+        }
+
+        .worship-guidelines h3 {
+            color: #2c5f2d;
+            text-align: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .worship-guidelines ul {
+            list-style: none;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .worship-guidelines li {
+            padding: 0.8rem;
+            margin: 0.5rem 0;
+            background: white;
+            border-left: 4px solid #2c5f2d;
+            border-radius: 5px;
+        }
+
+        .scripture-quote {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            padding: 3rem 5%;
+            text-align: center;
+        }
+
+        .scripture-quote blockquote {
+            max-width: 800px;
+            margin: 0 auto;
+            font-size: 1.2rem;
+            font-style: italic;
+            color: #2c5f2d;
+            line-height: 1.8;
+        }
+
+        .scripture-quote cite {
+            display: block;
+            margin-top: 1rem;
+            color: #666;
+            font-style: normal;
+        }
+
+        .services {
+            padding: 4rem 5%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .services h2 {
+            text-align: center;
+            color: #2c5f2d;
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .services > p {
+            text-align: center;
+            color: #666;
+            margin-bottom: 3rem;
+        }
+
+        .service-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .service-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            text-align: center;
+            transition: transform 0.3s;
+        }
+
+        .service-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .service-card .icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .service-card h3 {
+            color: #2c5f2d;
+            margin-bottom: 0.5rem;
+        }
+
+        .service-card .time {
+            color: #666;
+            font-size: 1.1rem;
+            margin-bottom: 1rem;
+        }
+
+        .welcome {
+            background: #f8f9fa;
+            padding: 4rem 5%;
+        }
+
+        .welcome-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            align-items: center;
+        }
+
+        .welcome-text h2 {
+            color: #2c5f2d;
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .welcome-text p {
+            margin-bottom: 1rem;
+            color: #666;
+        }
+
+        .welcome img {
+            width: 100%;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .officials {
+            padding: 4rem 5%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .officials h2 {
+            text-align: center;
+            color: #2c5f2d;
+            font-size: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .officials-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+
+        .official-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            text-align: center;
+            border-top: 4px solid #2c5f2d;
+        }
+
+        .official-card h4 {
+            color: #2c5f2d;
+            font-size: 1.1rem;
+            margin-bottom: 0.3rem;
+        }
+
+        .official-card .position {
+            color: #666;
+            font-style: italic;
+            font-size: 0.95rem;
+        }
+
+        .bible-reader {
+            background: linear-gradient(135deg, #2c5f2d 0%, #1e4620 100%);
+            color: white;
+            padding: 4rem 5%;
+            text-align: center;
+        }
+
+        .bible-reader h2 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .bible-reader p {
+            margin-bottom: 2rem;
+        }
+
+        .bible-reader .btn {
+            background: white;
+            color: #2c5f2d;
+        }
+
+        .mobile-reminder {
+            background: #333;
+            color: white;
+            text-align: center;
+            padding: 1rem;
+            font-size: 1.1rem;
+            font-weight: bold;
+        }
+
+        footer {
+            background: #2c5f2d;
+            color: white;
+            padding: 3rem 5% 1rem;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-section h3 {
+            margin-bottom: 1rem;
+            color: #ffd700;
+        }
+
+        .footer-section a {
+            color: white;
+            text-decoration: none;
+            display: block;
+            margin: 0.5rem 0;
+        }
+
+        .footer-section a:hover {
+            color: #ffd700;
+        }
+
+        .footer-section p {
+            margin: 0.5rem 0;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            font-size: 1.5rem;
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255,255,255,0.2);
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .menu-toggle {
+                display: block;
+            }
+
+            .hero h1 {
+                font-size: 1.8rem;
+            }
+
+            .welcome-content {
+                grid-template-columns: 1fr;
+            }
+
+            .diocesan-theme h2 {
+                font-size: 1.5rem;
+            }
+
+            .service-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="nav-container">
+            <a href="#" class="logo">COP</a>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#services">Services</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+            <button class="menu-toggle" id="menuToggle">☰</button>
+        </div>
+    </nav>
+
+    <div class="diocese-info">
+        <h3>Diocese of Lagos West (Anglican Communion)</h3>
+        <p>Anglican Church of the Pentecost</p>
+        <p>Beside Milaco Filling Station, Elemu Bus Stop, Bucknor Isheri Road</p>
+        <p>Established 27th May, 2007</p>
+        <p>Our Vision: "Christ for all Nations"</p>
+    </div>
+
+    <section class="hero" id="home">
+        <h1>Anglican Church of the Pentecost</h1>
+        <p>My Year of Glorious Expansion</p>
+        <a href="#services" class="btn">Join Us This Sunday</a>
+    </section>
+
+    <section class="theme-section">
+        <div class="diocesan-theme">
+            <h2>Who Is On The Lord's Side?</h2>
+            <p class="verse">EXODUS 32:26</p>
+        </div>
+
+        <div class="parish-theme">
+            <h3>PARISH THEME: MY YEAR OF GLORIOUS EXPANSION</h3>
+        </div>
+
+        <div class="monthly-theme">
+            <h3>FEBRUARY: MY MONTH OF DIVINE ELEVATION</h3>
+            <p class="scripture">GENESIS 41:40-41</p>
+        </div>
+
+        <div class="worship-guidelines">
+            <h3>As We Worship Together</h3>
+            <ul>
+                <li>Reverently acknowledge God's presence</li>
+                <li>Thoroughly reflect on your past week</li>
+                <li>Prayerfully participate in Word and songs</li>
+                <li>Joyfully and Faithfully dedicate yourself to effective Christian living</li>
+            </ul>
+        </div>
+    </section>
+
+    <section class="scripture-quote">
+        <blockquote>
+            For you will spread out to the right and to the left; your descendants will dispossess nations and settle in their desolate cities.
+            <cite>— Isaiah 54:3 (NKJV)</cite>
+        </blockquote>
+    </section>
+
+    <section class="services" id="services">
+        <h2>Our Service Times</h2>
+        <p>Join us as we gather to worship and grow together in faith</p>
+        
+        <div class="service-grid">
+            <div class="service-card">
+                <div class="icon">🕊️</div>
+                <h3>Sunday Service</h3>
+                <div class="time">9:00 AM</div>
+                <p>Weekly worship service with inspiring messages, praise, and communion with fellow believers.</p>
+            </div>
+
+            <div class="service-card">
+                <div class="icon">📖</div>
+                <h3>Evening Mass</h3>
+                <div class="time">Wednesday • 6:00 PM<br>(Holy Communion)</div>
+                <p>Join us for evening worship with Holy Communion and spiritual fellowship.</p>
+            </div>
+
+            <div class="service-card">
+                <div class="icon">👩‍👧‍👦</div>
+                <h3>Christian Mothers Meeting</h3>
+                <div class="time">Saturday • 9:00 AM</div>
+                <p>A gathering of mothers for prayer, fellowship, and mutual support in raising godly families.</p>
+            </div>
+
+            <div class="service-card">
+                <div class="icon">🎵</div>
+                <h3>Choir Practice</h3>
+                <div class="time">Saturday • 6:00 PM</div>
+                <p>Join our choir and lift your voice in praise. All are welcome, no experience needed.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="welcome" id="about">
+        <div class="welcome-content">
+            <div class="welcome-text">
+                <h2>Welcome Home</h2>
+                <p>At the Anglican Church of the Pentecost, we believe that everyone has a place in God's family. Whether you're a longtime believer or exploring faith for the first time, we're here to walk alongside you.</p>
+                <p>Our community is built on love, acceptance, and the transformative power of the Gospel. We invite you to experience authentic worship, meaningful fellowship, and opportunities to serve and grow.</p>
+                <a href="#contact" class="btn">Learn More About Us</a>
+            </div>
+            <img src="https://images.unsplash.com/photo-1507692049790-de58290a4334?auto=format&fit=crop&w=800&q=80" alt="Church community">
+        </div>
+    </section>
+
+    <section class="officials">
+        <h2>Our Church Leadership</h2>
+        <div class="officials-grid">
+            <div class="official-card">
+                <h4>Mr. Chibuzor Okeke</h4>
+                <p class="position">Warden</p>
+            </div>
+            <div class="official-card">
+                <h4>Sister Francis Ijaoma A.</h4>
+                <p class="position">Warden</p>
+            </div>
+            <div class="official-card">
+                <h4>The Rev'd E. K. Ajose</h4>
+                <p class="position">Vicar</p>
+            </div>
+            <div class="official-card">
+                <h4>The Ven. Arlue Ayo Kolawole</h4>
+                <p class="position">Archdeacon</p>
+            </div>
+            <div class="official-card">
+                <h4>The Rt. Revd (Dr.) James Olusola Odedeji Ph.D</h4>
+                <p class="position">The Diocesan Bishop</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="bible-reader">
+        <h2>Read the Word</h2>
+        <p>Access the Holy Bible anytime, anywhere</p>
+        <button class="btn" id="bibleBtn">Open Bible (NKJV)</button>
+    </section>
+
+    <div class="mobile-reminder">
+        PLEASE, SWITCH OFF YOUR MOBILE PHONES
+    </div>
+
+    <footer id="contact">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>Anglican Church of the Pentecost</h3>
+                <p>A community of believers dedicated to spreading God's love and truth.</p>
+                <div class="social-links">
+                    <a href="#">f</a>
+                    <a href="#">𝕏</a>
+                    <a href="#">📷</a>
+                    <a href="#">▶</a>
+                </div>
+            </div>
+
+            <div class="footer-section">
+                <h3>Quick Links</h3>
+                <a href="#home">Home</a>
+                <a href="#about">About Us</a>
+                <a href="#services">Services</a>
+                <a href="#contact">Contact</a>
+            </div>
+
+            <div class="footer-section">
+                <h3>Service Times</h3>
+                <p>Sunday Worship: 9:00 AM</p>
+                <p>Wednesday Evening Mass: 6:00 PM</p>
+                <p>Saturday Mothers Meeting: 9:00 AM</p>
+                <p>Saturday Choir: 6:00 PM</p>
+            </div>
+
+            <div class="footer-section">
+                <h3>Contact Us</h3>
+                <p>📧 info@acpchurch.org</p>
+                <p>📞 +1 (555) 123-4567</p>
+                <p>📍 123 Faith Avenue</p>
+            </div>
+        </div>
+
+        <div class="copyright">
+            <p>© 2026 Anglican Church of the Pentecost. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        /* ======================
+           MOBILE MENU FIX
+        ====================== */
+        const menuToggle = document.getElementById('menuToggle');
+        const navLinks = document.getElementById('navLinks');
+
+        menuToggle.addEventListener('click', function(e){
+            e.stopPropagation();
+            navLinks.classList.toggle('active');
+        });
+
+        document.addEventListener('click', function(e){
+            if(!document.querySelector('.nav-container').contains(e.target)){
+                navLinks.classList.remove('active');
+            }
+        });
+
+        // Close menu when clicking a link
+        const menuLinks = document.querySelectorAll('#navLinks a');
+        menuLinks.forEach(link => {
+            link.addEventListener('click', function(){
+                navLinks.classList.remove('active');
+            });
+        });
+
+        /* ======================
+           BIBLE BUTTON FIX
+        ====================== */
+        document.getElementById('bibleBtn').addEventListener('click', function(){
+            window.open(
+                "https://www.biblegateway.com/versions/New-King-James-Version-NKJV-Bible/",
+                "_blank"
+            );
+        });
+    </script>
+</body>
+</html>
